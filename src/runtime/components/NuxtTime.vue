@@ -46,7 +46,7 @@ const date = computed(() => {
 })
 
 const formatter = computed(() => {
-  const { locale: propsLocale, ...rest } = props
+  const { locale: propsLocale, relative: relative , ...rest } = props
   return new Intl.DateTimeFormat(locale ?? propsLocale, rest)
 })
 const formattedDate = computed(() => formatter.value.format(date.value))
@@ -56,7 +56,7 @@ const dataset: Record<string, any> = {}
 
 if (process.server) {
   for (const prop in props) {
-    if (prop !== 'datetime') {
+    if (prop !== 'datetime' && prop  !== 'relative') {
       const propInKebabCase = prop.split(/(?=[A-Z])/).join('-')
       dataset[`data-${propInKebabCase}`] = props?.[prop as keyof typeof props]
     }
