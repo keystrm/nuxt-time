@@ -4,7 +4,8 @@ import scriptContents from '#build/nuxt-time-script.mjs'
 
 const props = withDefaults(defineProps<{
   locale?: string
-  datetime: string | number | Date
+  datetime: string | number | Date,
+  relative?: boolean,
   localeMatcher?: 'best fit' | 'lookup'
   weekday?: 'long' | 'short' | 'narrow'
   era?: 'long' | 'short' | 'narrow'
@@ -27,7 +28,8 @@ const props = withDefaults(defineProps<{
   timeStyle?: 'full' | 'long' | 'medium' | 'short'
   hourCycle?: 'h11' | 'h12' | 'h23' | 'h24'
 }>(), {
-  hour12: undefined
+  hour12: undefined,
+  relative: false
 })
 
 const el = getCurrentInstance()?.vnode.el
