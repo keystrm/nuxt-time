@@ -55,7 +55,7 @@ const relativeFormatter = computed(()=>{
   return new Intl.RelativeTimeFormat(locale ?? propsLocale, rest)
 })
 
-const timeDifference = computed(()=>new Date().getDate()-date.value.getDate())
+const timeDifference = computed(()=>new Date().getTime()-date.value.getTime())
 
 const relativeFormatterDate = computed(()=> relativeFormatter.value.format((-timeDifference.value/(1000 * 60 * 60 * 24)),'day'))
 const formattedDate = computed(() => formatter.value.format(date.value))
