@@ -49,6 +49,15 @@ const formatter = computed(() => {
   const { locale: propsLocale, relative: relative , ...rest } = props
   return new Intl.DateTimeFormat(locale ?? propsLocale, rest)
 })
+
+const relativeFormatter = computed(()=>{
+  const { locale: propsLocale, relative: relative , ...rest } = props
+  return new Intl.RelativeTimeFormat(locale ?? propsLocale, rest)
+})
+
+const timeDifference = computed(()=>new Date().getDate()-date.value.getDate())
+
+const relativeFormatterDate = computed(()=> relativeFormatter.value.format((-timeDifference.value/(1000 * 60 * 60 * 24)),'day'))
 const formattedDate = computed(() => formatter.value.format(date.value))
 const isoDate = computed(() => date.value.toISOString())
 
@@ -73,5 +82,6 @@ if (process.server) {
 </script>
 
 <template>
-  <time data-n-time v-bind="dataset" :datetime="isoDate">{{ formattedDate }}</time>
+  <time v-if="!props.relative" data-n-time v-bind="dataset" :datetime="isoDate">{{ formattedDate }}</time>
+  <time v-else data-n-time v-bind="dataset" :datetime="isoDate">{{ relativeFormatterDate }}</time>
 </template>
