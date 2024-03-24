@@ -65,7 +65,7 @@ const dataset: Record<string, any> = {}
 
 if (process.server) {
   for (const prop in props) {
-    if (prop !== 'datetime' && prop  !== 'relative') {
+    if (prop !== 'datetime') {
       const propInKebabCase = prop.split(/(?=[A-Z])/).join('-')
       dataset[`data-${propInKebabCase}`] = props?.[prop as keyof typeof props]
     }
