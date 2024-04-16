@@ -29,12 +29,12 @@ const props = withDefaults(defineProps<{
   hourCycle?: 'h11' | 'h12' | 'h23' | 'h24'
 }>(), {
   hour12: undefined,
-  relative: false
+  relative: false,
 })
 
 const el = getCurrentInstance()?.vnode.el
 const renderedDate = el?.getAttribute('datetime')
-const locale = el?.getAttribute('data-locale')
+const _locale = el?.getAttribute('data-locale')
 
 const nuxtApp = useNuxtApp()
 
@@ -47,7 +47,7 @@ const date = computed(() => {
 
 const formatter = computed(() => {
   const { locale: propsLocale, relative: relative , ...rest } = props
-  return new Intl.DateTimeFormat(locale ?? propsLocale, rest)
+  return new Intl.DateTimeFormat(_locale ?? propsLocale, rest)
 })
 
 const relativeFormatter = computed(()=>{
@@ -61,7 +61,7 @@ const relativeFormatterDate = computed(()=> relativeFormatter.value.format((-tim
 const formattedDate = computed(() => formatter.value.format(date.value))
 const isoDate = computed(() => date.value.toISOString())
 
-const dataset: Record<string, any> = {}
+const dataset: Record<string, string | number | boolean | Date | undefined> = {}
 
 if (import.meta.server) {
   for (const prop in props) {
@@ -75,13 +75,17 @@ if (import.meta.server) {
       tagPosition: 'bodyClose',
       tagPriority: -20,
       key: 'nuxt-time',
-      innerHTML: scriptContents
-    }]
+      innerHTML: scriptContents,
+    }],
   })
 }
 </script>
 
 <template>
-  <time v-if="!props.relative" data-n-time v-bind="dataset" :datetime="isoDate">{{ formattedDate }}</time>
+  <time v-if="!props.relative"
+    data-n-time
+    v-bind="dataset"
+    :datetime="isoDate"
+  >{{ formattedDate }}</time>
   <time v-else data-n-time v-bind="dataset" :datetime="isoDate">{{ relativeFormatterDate }}</time>
 </template>
