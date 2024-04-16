@@ -30,11 +30,12 @@ const props = withDefaults(defineProps<{
   hourCycle?: 'h11' | 'h12' | 'h23' | 'h24'
 }>(), {
   hour12: undefined,
-  relative: 'best fit',
+  relative: undefined,
 })
 
 const el = getCurrentInstance()?.vnode.el
 const renderedDate = el?.getAttribute('datetime')
+const renderedRelativeDate = el?.getAttribute('datetime')
 const _locale = el?.getAttribute('data-locale')
 
 const nuxtApp = useNuxtApp()
@@ -46,13 +47,20 @@ const date = computed(() => {
   return new Date(date)
 })
 
+const relativeDate = computed(() => {
+  const date = props.relativeDatetime
+  if (renderedRelativeDate && nuxtApp.isHydrating) return new Date(renderedRelativeDate)
+  if (!date) return new Date()
+  return new Date(date)
+})
+
 const formatter = computed(() => {
-  const { locale: propsLocale, relative: relative , ...rest } = props
+  const { locale: propsLocale, relative: relative , relativeDatetime , ...rest } = props
   return new Intl.DateTimeFormat(_locale ?? propsLocale, rest)
 })
 
 const relativeFormatter = computed(()=>{
-  const { locale: propsLocale, relative: relative , ...rest } = props
+  const { locale: propsLocale, relative: relative , relativeDatetime , ...rest } = props
   return new Intl.RelativeTimeFormat(_locale ?? propsLocale, rest)
 })
 
