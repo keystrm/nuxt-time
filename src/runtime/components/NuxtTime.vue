@@ -52,7 +52,7 @@ const formatter = computed(() => {
 
 const relativeFormatter = computed(()=>{
   const { locale: propsLocale, relative: relative , ...rest } = props
-  return new Intl.RelativeTimeFormat(locale ?? propsLocale, rest)
+  return new Intl.RelativeTimeFormat(_locale ?? propsLocale, rest)
 })
 
 const timeDifference = computed(()=>new Date().getTime()-date.value.getTime())
