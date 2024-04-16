@@ -1,26 +1,27 @@
 const useTimeFormatter = ( date: Date, relativeDate: Date, unit : "best fit" | "year" | "quarter" | "month" | "week" | "day" | "hour" | "minute" | "second") => {
     const timeDifference = computed(()=>date.getTime()-relativeDate.getTime())
 
-    const getValuesForTimeDifference = (timeDifference: number, unit :"year" | "quarter" | "month" | "week" | "day" | "hour" | "minute" | "second") => {
+    const getValuesForTimeDifference = (timeDifference: number, unit :"best fit"| "year" | "quarter" | "month" | "week" | "day" | "hour" | "minute" | "second") => {
         switch (unit) {
             case "year":
-                return timeDifference / (1000 * 60 * 60 * 24 * 365)
+                return {value: timeDifference / (1000 * 60 * 60 * 24 * 365),unit:"year"}
             case "quarter":
-                return timeDifference / (1000 * 60 * 60 * 24 * 91.25)
+                return {value:timeDifference / (1000 * 60 * 60 * 24 * 91.25),unit:"quarter"}
             case "month":
-                return timeDifference / (1000 * 60 * 60 * 24 * 30.44)
+                return {value:timeDifference / (1000 * 60 * 60 * 24 * 30.44),unit:"month"}
             case "week":
-                return timeDifference / (1000 * 60 * 60 * 24 * 7)
+                return {value:timeDifference / (1000 * 60 * 60 * 24 * 7),unit:"week"}
             case "day":
-                return timeDifference / (1000 * 60 * 60 * 24)
+                return {value:timeDifference / (1000 * 60 * 60 * 24),unit:"day"}
             case "hour":
-                return timeDifference / (1000 * 60 * 60)
+                return {value:timeDifference / (1000 * 60 * 60),unit:"hour"}
             case "minute":
-                return timeDifference / (1000 * 60)
+                return {value:timeDifference / (1000 * 60),unit:"minute"}
             case "second":
-                return timeDifference / 1000
-            default:
-                return null
+                return {value:timeDifference / 1000,unit:"second"}
+            case "best fit":
+                let unit = findBestFitUnit(timeDifference)
+                return getValuesForTimeDifference(timeDifference,unit)
         }
     }
 
