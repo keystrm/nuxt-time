@@ -48,7 +48,7 @@
     "pathe": "^1.1.2"
   },
   "devDependencies": {
-    "@nuxt/module-builder": "0.5.5",
+    "@nuxt/module-builder": "0.6.0",
     "@nuxt/schema": "3.11.0",
     "@nuxt/test-utils": "3.12.0",
     "@types/node": "20.11.30",
@@ -56,7 +56,7 @@
     "@vue/test-utils": "2.4.5",
     "bumpp": "9.4.0",
     "esbuild": "0.20.2",
-    "eslint": "9.0.0",
+    "eslint": "9.1.0",
     "expect-type": "0.18.0",
     "get-port-please": "3.1.2",
     "happy-dom": "14.1.0",
@@ -70,11 +70,11 @@
     "vitest": "1.4.0",
     "vitest-environment-nuxt": "1.0.0",
     "vue": "3.4.21",
-    "@nuxt/eslint-config": "0.3.6"
+    "@nuxt/eslint-config": "0.3.8"
   },
   "resolutions": {
     "@nuxt/kit": "3.11.0",
     "nuxt-time": "link:."
   },
-  "packageManager": "pnpm@8.15.7"
+  "packageManager": "pnpm@9.0.5"
 }
