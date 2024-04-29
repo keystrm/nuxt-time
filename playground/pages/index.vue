@@ -15,6 +15,7 @@ const changeDate = () => {
       :locale="locale"
       data-testid="switchable"
       :datetime="date"
+      relative="best fit"
       second="numeric"
       month="long"
       day="numeric"

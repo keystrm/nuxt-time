@@ -1,5 +1,6 @@
 <script setup lang='ts'>
 import { computed, getCurrentInstance, useNuxtApp, useHead } from '#imports'
+import getRelativeTime from '../../relativeTimeFormatter';
 import scriptContents from '#build/nuxt-time-script.mjs'
 
 const props = withDefaults(defineProps<{
@@ -64,9 +65,13 @@ const relativeFormatter = computed(()=>{
   return new Intl.RelativeTimeFormat(_locale ?? propsLocale, rest)
 })
 
-const timeDifference = computed(()=>new Date().getTime()-date.value.getTime())
+const timeDifference = computed(()=>relativeDate.value.getTime()-date.value.getTime())
 
-const relativeFormatterDate = computed(()=> relativeFormatter.value.format((-timeDifference.value/(1000 * 60 * 60 * 24)),'day'))
+const relativeFormatterDate = computed(()=>{
+  let {value,unit} =getRelativeTime(timeDifference.value,props.relative??'best fit')
+  return relativeFormatter.value.format(value,unit)
+})
+
 const formattedDate = computed(() => formatter.value.format(date.value))
 const isoDate = computed(() => date.value.toISOString())
 
